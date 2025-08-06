@@ -1,0 +1,86 @@
+(* EBNF Grammar for the Simple Compiler Language - Corrected Version *)
+(*
+ * This grammar has been corrected to:
+ * 1. Eliminate left recursion in expression rules.
+ * 2. Enforce standard operator precedence and associativity.
+ * 3. Fix the structure of the 'for' loop.
+ * 4. Improve definitions for numbers and other rules.
+*)
+
+program = statement_list ;
+
+statement_list = statement { statement } ;
+
+statement =
+      function_def
+    | declaration
+    | assignment
+    | if_stmt
+    | for_stmt
+    | while_stmt
+    | return_stmt
+    | expression ";"
+    ;
+
+function_def = type identifier "(" param_list ")" "{" statement_list "}" ;
+param_list = [ param { "," param } ] ;
+param = type identifier ;
+
+declaration = declaration_no_semi ";" ;
+declaration_no_semi = type identifier [ "=" expression ] ;
+
+assignment = identifier "=" expression ";" ;
+
+(* Corrected 'if' statement. Note: The "dangling else" ambiguity is typically *)
+(* resolved by the parser's logic (e.g., attaching 'else' to the nearest 'if'). *)
+if_stmt = "if" "(" expression ")" "{" statement_list "}" [ "else" "{" statement_list "}" ] ;
+
+(* Corrected 'for' statement to match C-style syntax and flexibility. *)
+for_stmt = "for" "(" for_init ";" [ expression ] ";" [ expression ] ")" "{" statement_list "}" ;
+for_init = [ declaration_no_semi | expression ] ;
+
+while_stmt = "while" "(" expression ")" "{" statement_list "}" ;
+
+return_stmt = "return" [ expression ] ";" ;
+
+(*
+ * Expression grammar refactored to enforce operator precedence and associativity,
+ * and to remove left-recursion.
+ * Precedence Order (highest to lowest):
+ * ()
+ * * /
+ * + -
+ * < > <= >= == !=
+ * &&
+ * ||
+*)
+expression       = logical_or_expr ;
+logical_or_expr  = logical_and_expr { "||" logical_and_expr } ;
+logical_and_expr = equality_expr { "&&" equality_expr } ;
+equality_expr    = relational_expr { ( "==" | "!=" ) relational_expr } ;
+relational_expr  = arithmetic_expr { ( "<" | ">" | "<=" | ">=" ) arithmetic_expr } ;
+arithmetic_expr  = term { ( "+" | "-" ) term } ;
+term             = factor { ( "*" | "/" ) factor } ;
+factor           = identifier | number | char_literal | "(" expression ")" | function_call ;
+
+function_call = identifier "(" arg_list ")" ;
+arg_list = [ expression { "," expression } ] ;
+
+type = "int" | "float" | "char" | "void" ;
+
+identifier = letter { letter | digit } ;
+
+(* Corrected 'number' to require a digit after a decimal point. *)
+number = digit { digit } [ "." digit { digit } ] ;
+
+(* Note: This 'char_literal' rule does not support escape sequences. Allowing *)
+(* special characters like "'" within the literal would require a more complex rule. *)
+char_literal = "'" ( letter | digit | special_char ) "'" ;
+
+letter = "a".."z" | "A".."Z" | "_" ;
+digit = "0".."9" ;
+special_char = "!" | "@" | "#" | "$" | "%" | "^" | "&" | "*" | "(" | ")" | "-" | "+" | "=" | "[" | "]" | "{" | "}" | ";" | ":" | "," | "." | "/" | "?" | "~" | "`" ;
+
+
+(* Whitespace (spaces, tabs, newlines) is assumed to be ignored between tokens. *)
+(* Comments are also ignored. *)

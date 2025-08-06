@@ -1,0 +1,2353 @@
+Terminals unused in grammar
+
+    UMINUS
+
+
+State 27 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: statement_list
+
+    2 statement_list: statement
+    3               | statement_list statement
+
+    4 statement: function_def
+    5          | declaration
+    6          | assignment
+    7          | if_stmt
+    8          | for_stmt
+    9          | while_stmt
+   10          | return_stmt
+   11          | expression ';'
+
+   12 function_def: type IDENTIFIER '(' param_list ')' '{' statement_list '}'
+
+   13 param_list: %empty
+   14           | param
+   15           | param_list ',' param
+
+   16 param: type IDENTIFIER
+
+   17 declaration: declaration_no_semi ';'
+
+   18 declaration_no_semi: type IDENTIFIER
+   19                    | type IDENTIFIER '=' expression
+
+   20 assignment: assignment_expr ';'
+
+   21 if_stmt: IF '(' expression ')' '{' statement_list '}'
+   22        | IF '(' expression ')' '{' statement_list '}' ELSE '{' statement_list '}'
+
+   23 for_stmt: FOR '(' for_init ';' expression ';' expression ')' '{' statement_list '}'
+   24         | FOR '(' for_init ';' ';' expression ')' '{' statement_list '}'
+   25         | FOR '(' for_init ';' expression ';' ')' '{' statement_list '}'
+   26         | FOR '(' for_init ';' ';' ')' '{' statement_list '}'
+
+   27 for_init: %empty
+   28         | declaration_no_semi
+   29         | expression
+
+   30 while_stmt: WHILE '(' expression ')' '{' statement_list '}'
+
+   31 return_stmt: RETURN ';'
+   32            | RETURN expression ';'
+
+   33 expression: assignment_expr
+   34           | logical_or_expr
+
+   35 assignment_expr: IDENTIFIER '=' expression
+
+   36 logical_or_expr: logical_and_expr
+   37                | logical_or_expr OR logical_and_expr
+
+   38 logical_and_expr: equality_expr
+   39                 | logical_and_expr AND equality_expr
+
+   40 equality_expr: relational_expr
+   41              | equality_expr EQ relational_expr
+   42              | equality_expr NE relational_expr
+
+   43 relational_expr: arithmetic_expr
+   44                | relational_expr '<' arithmetic_expr
+   45                | relational_expr '>' arithmetic_expr
+   46                | relational_expr LE arithmetic_expr
+   47                | relational_expr GE arithmetic_expr
+
+   48 arithmetic_expr: term
+   49                | arithmetic_expr '+' term
+   50                | arithmetic_expr '-' term
+
+   51 term: factor
+   52     | term '*' factor
+   53     | term '/' factor
+
+   54 factor: IDENTIFIER
+   55       | NUMBER
+   56       | CHAR_LITERAL
+   57       | '(' expression ')'
+   58       | function_call
+   59       | '-' factor
+   60       | '!' factor
+
+   61 function_call: IDENTIFIER '(' arg_list ')'
+
+   62 arg_list: %empty
+   63         | expression
+   64         | arg_list ',' expression
+
+   65 type: INT
+   66     | FLOAT
+   67     | CHAR
+   68     | VOID
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '!' (33) 60
+    '(' (40) 12 21 22 23 24 25 26 30 57 61
+    ')' (41) 12 21 22 23 24 25 26 30 57 61
+    '*' (42) 52
+    '+' (43) 49
+    ',' (44) 15 64
+    '-' (45) 50 59
+    '/' (47) 53
+    ';' (59) 11 17 20 23 24 25 26 31 32
+    '<' (60) 44
+    '=' (61) 19 35
+    '>' (62) 45
+    '{' (123) 12 21 22 23 24 25 26 30
+    '}' (125) 12 21 22 23 24 25 26 30
+    error (256)
+    INT (258) 65
+    FLOAT (259) 66
+    CHAR (260) 67
+    VOID (261) 68
+    IF (262) 21 22
+    ELSE (263) 22
+    FOR (264) 23 24 25 26
+    WHILE (265) 30
+    RETURN (266) 31 32
+    EQ (267) 41
+    NE (268) 42
+    LE (269) 46
+    GE (270) 47
+    AND (271) 39
+    OR (272) 37
+    IDENTIFIER <std::string> (273) 12 16 18 19 35 54 61
+    NUMBER <std::string> (274) 55
+    CHAR_LITERAL <std::string> (275) 56
+    UMINUS (276)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (36)
+        on left: 0
+    program <Node*> (37)
+        on left: 1
+        on right: 0
+    statement_list <Node*> (38)
+        on left: 2 3
+        on right: 1 3 12 21 22 23 24 25 26 30
+    statement <Node*> (39)
+        on left: 4 5 6 7 8 9 10 11
+        on right: 2 3
+    function_def <Node*> (40)
+        on left: 12
+        on right: 4
+    param_list <Node*> (41)
+        on left: 13 14 15
+        on right: 12 15
+    param <Node*> (42)
+        on left: 16
+        on right: 14 15
+    declaration <Node*> (43)
+        on left: 17
+        on right: 5
+    declaration_no_semi <Node*> (44)
+        on left: 18 19
+        on right: 17 28
+    assignment <Node*> (45)
+        on left: 20
+        on right: 6
+    if_stmt <Node*> (46)
+        on left: 21 22
+        on right: 7
+    for_stmt <Node*> (47)
+        on left: 23 24 25 26
+        on right: 8
+    for_init <Node*> (48)
+        on left: 27 28 29
+        on right: 23 24 25 26
+    while_stmt <Node*> (49)
+        on left: 30
+        on right: 9
+    return_stmt <Node*> (50)
+        on left: 31 32
+        on right: 10
+    expression <Node*> (51)
+        on left: 33 34
+        on right: 11 19 21 22 23 24 25 29 30 32 35 57 63 64
+    assignment_expr <Node*> (52)
+        on left: 35
+        on right: 20 33
+    logical_or_expr <Node*> (53)
+        on left: 36 37
+        on right: 34 37
+    logical_and_expr <Node*> (54)
+        on left: 38 39
+        on right: 36 37 39
+    equality_expr <Node*> (55)
+        on left: 40 41 42
+        on right: 38 39 41 42
+    relational_expr <Node*> (56)
+        on left: 43 44 45 46 47
+        on right: 40 41 42 44 45 46 47
+    arithmetic_expr <Node*> (57)
+        on left: 48 49 50
+        on right: 43 44 45 46 47 49 50
+    term <Node*> (58)
+        on left: 51 52 53
+        on right: 48 49 50 52 53
+    factor <Node*> (59)
+        on left: 54 55 56 57 58 59 60
+        on right: 51 52 53 59 60
+    function_call <Node*> (60)
+        on left: 61
+        on right: 58
+    arg_list <Node*> (61)
+        on left: 62 63 64
+        on right: 61 64
+    type <Node*> (62)
+        on left: 65 66 67 68
+        on right: 12 16 18 19
+
+
+State 0
+
+    0 $accept: . program $end
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    program              go to state 15
+    statement_list       go to state 16
+    statement            go to state 17
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 1
+
+   65 type: INT .
+
+    $default  reduce using rule 65 (type)
+
+
+State 2
+
+   66 type: FLOAT .
+
+    $default  reduce using rule 66 (type)
+
+
+State 3
+
+   67 type: CHAR .
+
+    $default  reduce using rule 67 (type)
+
+
+State 4
+
+   68 type: VOID .
+
+    $default  reduce using rule 68 (type)
+
+
+State 5
+
+   21 if_stmt: IF . '(' expression ')' '{' statement_list '}'
+   22        | IF . '(' expression ')' '{' statement_list '}' ELSE '{' statement_list '}'
+
+    '('  shift, and go to state 37
+
+
+State 6
+
+   23 for_stmt: FOR . '(' for_init ';' expression ';' expression ')' '{' statement_list '}'
+   24         | FOR . '(' for_init ';' ';' expression ')' '{' statement_list '}'
+   25         | FOR . '(' for_init ';' expression ';' ')' '{' statement_list '}'
+   26         | FOR . '(' for_init ';' ';' ')' '{' statement_list '}'
+
+    '('  shift, and go to state 38
+
+
+State 7
+
+   30 while_stmt: WHILE . '(' expression ')' '{' statement_list '}'
+
+    '('  shift, and go to state 39
+
+
+State 8
+
+   31 return_stmt: RETURN . ';'
+   32            | RETURN . expression ';'
+
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    ';'           shift, and go to state 40
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    expression        go to state 41
+    assignment_expr   go to state 42
+    logical_or_expr   go to state 28
+    logical_and_expr  go to state 29
+    equality_expr     go to state 30
+    relational_expr   go to state 31
+    arithmetic_expr   go to state 32
+    term              go to state 33
+    factor            go to state 34
+    function_call     go to state 35
+
+
+State 9
+
+   35 assignment_expr: IDENTIFIER . '=' expression
+   54 factor: IDENTIFIER .
+   61 function_call: IDENTIFIER . '(' arg_list ')'
+
+    '('  shift, and go to state 43
+    '='  shift, and go to state 44
+
+    $default  reduce using rule 54 (factor)
+
+
+State 10
+
+   55 factor: NUMBER .
+
+    $default  reduce using rule 55 (factor)
+
+
+State 11
+
+   56 factor: CHAR_LITERAL .
+
+    $default  reduce using rule 56 (factor)
+
+
+State 12
+
+   57 factor: '(' . expression ')'
+
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    expression        go to state 45
+    assignment_expr   go to state 42
+    logical_or_expr   go to state 28
+    logical_and_expr  go to state 29
+    equality_expr     go to state 30
+    relational_expr   go to state 31
+    arithmetic_expr   go to state 32
+    term              go to state 33
+    factor            go to state 34
+    function_call     go to state 35
+
+
+State 13
+
+   59 factor: '-' . factor
+
+    IDENTIFIER    shift, and go to state 46
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    factor         go to state 47
+    function_call  go to state 35
+
+
+State 14
+
+   60 factor: '!' . factor
+
+    IDENTIFIER    shift, and go to state 46
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    factor         go to state 48
+    function_call  go to state 35
+
+
+State 15
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 49
+
+
+State 16
+
+    1 program: statement_list .
+    3 statement_list: statement_list . statement
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    $default  reduce using rule 1 (program)
+
+    statement            go to state 50
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 17
+
+    2 statement_list: statement .
+
+    $default  reduce using rule 2 (statement_list)
+
+
+State 18
+
+    4 statement: function_def .
+
+    $default  reduce using rule 4 (statement)
+
+
+State 19
+
+    5 statement: declaration .
+
+    $default  reduce using rule 5 (statement)
+
+
+State 20
+
+   17 declaration: declaration_no_semi . ';'
+
+    ';'  shift, and go to state 51
+
+
+State 21
+
+    6 statement: assignment .
+
+    $default  reduce using rule 6 (statement)
+
+
+State 22
+
+    7 statement: if_stmt .
+
+    $default  reduce using rule 7 (statement)
+
+
+State 23
+
+    8 statement: for_stmt .
+
+    $default  reduce using rule 8 (statement)
+
+
+State 24
+
+    9 statement: while_stmt .
+
+    $default  reduce using rule 9 (statement)
+
+
+State 25
+
+   10 statement: return_stmt .
+
+    $default  reduce using rule 10 (statement)
+
+
+State 26
+
+   11 statement: expression . ';'
+
+    ';'  shift, and go to state 52
+
+
+State 27
+
+   20 assignment: assignment_expr . ';'
+   33 expression: assignment_expr .
+
+    ';'  shift, and go to state 53
+
+    ';'  [reduce using rule 33 (expression)]
+
+
+State 28
+
+   34 expression: logical_or_expr .
+   37 logical_or_expr: logical_or_expr . OR logical_and_expr
+
+    OR  shift, and go to state 54
+
+    $default  reduce using rule 34 (expression)
+
+
+State 29
+
+   36 logical_or_expr: logical_and_expr .
+   39 logical_and_expr: logical_and_expr . AND equality_expr
+
+    AND  shift, and go to state 55
+
+    $default  reduce using rule 36 (logical_or_expr)
+
+
+State 30
+
+   38 logical_and_expr: equality_expr .
+   41 equality_expr: equality_expr . EQ relational_expr
+   42              | equality_expr . NE relational_expr
+
+    EQ  shift, and go to state 56
+    NE  shift, and go to state 57
+
+    $default  reduce using rule 38 (logical_and_expr)
+
+
+State 31
+
+   40 equality_expr: relational_expr .
+   44 relational_expr: relational_expr . '<' arithmetic_expr
+   45                | relational_expr . '>' arithmetic_expr
+   46                | relational_expr . LE arithmetic_expr
+   47                | relational_expr . GE arithmetic_expr
+
+    LE   shift, and go to state 58
+    GE   shift, and go to state 59
+    '<'  shift, and go to state 60
+    '>'  shift, and go to state 61
+
+    $default  reduce using rule 40 (equality_expr)
+
+
+State 32
+
+   43 relational_expr: arithmetic_expr .
+   49 arithmetic_expr: arithmetic_expr . '+' term
+   50                | arithmetic_expr . '-' term
+
+    '+'  shift, and go to state 62
+    '-'  shift, and go to state 63
+
+    $default  reduce using rule 43 (relational_expr)
+
+
+State 33
+
+   48 arithmetic_expr: term .
+   52 term: term . '*' factor
+   53     | term . '/' factor
+
+    '*'  shift, and go to state 64
+    '/'  shift, and go to state 65
+
+    $default  reduce using rule 48 (arithmetic_expr)
+
+
+State 34
+
+   51 term: factor .
+
+    $default  reduce using rule 51 (term)
+
+
+State 35
+
+   58 factor: function_call .
+
+    $default  reduce using rule 58 (factor)
+
+
+State 36
+
+   12 function_def: type . IDENTIFIER '(' param_list ')' '{' statement_list '}'
+   18 declaration_no_semi: type . IDENTIFIER
+   19                    | type . IDENTIFIER '=' expression
+
+    IDENTIFIER  shift, and go to state 66
+
+
+State 37
+
+   21 if_stmt: IF '(' . expression ')' '{' statement_list '}'
+   22        | IF '(' . expression ')' '{' statement_list '}' ELSE '{' statement_list '}'
+
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    expression        go to state 67
+    assignment_expr   go to state 42
+    logical_or_expr   go to state 28
+    logical_and_expr  go to state 29
+    equality_expr     go to state 30
+    relational_expr   go to state 31
+    arithmetic_expr   go to state 32
+    term              go to state 33
+    factor            go to state 34
+    function_call     go to state 35
+
+
+State 38
+
+   23 for_stmt: FOR '(' . for_init ';' expression ';' expression ')' '{' statement_list '}'
+   24         | FOR '(' . for_init ';' ';' expression ')' '{' statement_list '}'
+   25         | FOR '(' . for_init ';' expression ';' ')' '{' statement_list '}'
+   26         | FOR '(' . for_init ';' ';' ')' '{' statement_list '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    $default  reduce using rule 27 (for_init)
+
+    declaration_no_semi  go to state 68
+    for_init             go to state 69
+    expression           go to state 70
+    assignment_expr      go to state 42
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 71
+
+
+State 39
+
+   30 while_stmt: WHILE '(' . expression ')' '{' statement_list '}'
+
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    expression        go to state 72
+    assignment_expr   go to state 42
+    logical_or_expr   go to state 28
+    logical_and_expr  go to state 29
+    equality_expr     go to state 30
+    relational_expr   go to state 31
+    arithmetic_expr   go to state 32
+    term              go to state 33
+    factor            go to state 34
+    function_call     go to state 35
+
+
+State 40
+
+   31 return_stmt: RETURN ';' .
+
+    $default  reduce using rule 31 (return_stmt)
+
+
+State 41
+
+   32 return_stmt: RETURN expression . ';'
+
+    ';'  shift, and go to state 73
+
+
+State 42
+
+   33 expression: assignment_expr .
+
+    $default  reduce using rule 33 (expression)
+
+
+State 43
+
+   61 function_call: IDENTIFIER '(' . arg_list ')'
+
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    $default  reduce using rule 62 (arg_list)
+
+    expression        go to state 74
+    assignment_expr   go to state 42
+    logical_or_expr   go to state 28
+    logical_and_expr  go to state 29
+    equality_expr     go to state 30
+    relational_expr   go to state 31
+    arithmetic_expr   go to state 32
+    term              go to state 33
+    factor            go to state 34
+    function_call     go to state 35
+    arg_list          go to state 75
+
+
+State 44
+
+   35 assignment_expr: IDENTIFIER '=' . expression
+
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    expression        go to state 76
+    assignment_expr   go to state 42
+    logical_or_expr   go to state 28
+    logical_and_expr  go to state 29
+    equality_expr     go to state 30
+    relational_expr   go to state 31
+    arithmetic_expr   go to state 32
+    term              go to state 33
+    factor            go to state 34
+    function_call     go to state 35
+
+
+State 45
+
+   57 factor: '(' expression . ')'
+
+    ')'  shift, and go to state 77
+
+
+State 46
+
+   54 factor: IDENTIFIER .
+   61 function_call: IDENTIFIER . '(' arg_list ')'
+
+    '('  shift, and go to state 43
+
+    $default  reduce using rule 54 (factor)
+
+
+State 47
+
+   59 factor: '-' factor .
+
+    $default  reduce using rule 59 (factor)
+
+
+State 48
+
+   60 factor: '!' factor .
+
+    $default  reduce using rule 60 (factor)
+
+
+State 49
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 50
+
+    3 statement_list: statement_list statement .
+
+    $default  reduce using rule 3 (statement_list)
+
+
+State 51
+
+   17 declaration: declaration_no_semi ';' .
+
+    $default  reduce using rule 17 (declaration)
+
+
+State 52
+
+   11 statement: expression ';' .
+
+    $default  reduce using rule 11 (statement)
+
+
+State 53
+
+   20 assignment: assignment_expr ';' .
+
+    $default  reduce using rule 20 (assignment)
+
+
+State 54
+
+   37 logical_or_expr: logical_or_expr OR . logical_and_expr
+
+    IDENTIFIER    shift, and go to state 46
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    logical_and_expr  go to state 78
+    equality_expr     go to state 30
+    relational_expr   go to state 31
+    arithmetic_expr   go to state 32
+    term              go to state 33
+    factor            go to state 34
+    function_call     go to state 35
+
+
+State 55
+
+   39 logical_and_expr: logical_and_expr AND . equality_expr
+
+    IDENTIFIER    shift, and go to state 46
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    equality_expr    go to state 79
+    relational_expr  go to state 31
+    arithmetic_expr  go to state 32
+    term             go to state 33
+    factor           go to state 34
+    function_call    go to state 35
+
+
+State 56
+
+   41 equality_expr: equality_expr EQ . relational_expr
+
+    IDENTIFIER    shift, and go to state 46
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    relational_expr  go to state 80
+    arithmetic_expr  go to state 32
+    term             go to state 33
+    factor           go to state 34
+    function_call    go to state 35
+
+
+State 57
+
+   42 equality_expr: equality_expr NE . relational_expr
+
+    IDENTIFIER    shift, and go to state 46
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    relational_expr  go to state 81
+    arithmetic_expr  go to state 32
+    term             go to state 33
+    factor           go to state 34
+    function_call    go to state 35
+
+
+State 58
+
+   46 relational_expr: relational_expr LE . arithmetic_expr
+
+    IDENTIFIER    shift, and go to state 46
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    arithmetic_expr  go to state 82
+    term             go to state 33
+    factor           go to state 34
+    function_call    go to state 35
+
+
+State 59
+
+   47 relational_expr: relational_expr GE . arithmetic_expr
+
+    IDENTIFIER    shift, and go to state 46
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    arithmetic_expr  go to state 83
+    term             go to state 33
+    factor           go to state 34
+    function_call    go to state 35
+
+
+State 60
+
+   44 relational_expr: relational_expr '<' . arithmetic_expr
+
+    IDENTIFIER    shift, and go to state 46
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    arithmetic_expr  go to state 84
+    term             go to state 33
+    factor           go to state 34
+    function_call    go to state 35
+
+
+State 61
+
+   45 relational_expr: relational_expr '>' . arithmetic_expr
+
+    IDENTIFIER    shift, and go to state 46
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    arithmetic_expr  go to state 85
+    term             go to state 33
+    factor           go to state 34
+    function_call    go to state 35
+
+
+State 62
+
+   49 arithmetic_expr: arithmetic_expr '+' . term
+
+    IDENTIFIER    shift, and go to state 46
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    term           go to state 86
+    factor         go to state 34
+    function_call  go to state 35
+
+
+State 63
+
+   50 arithmetic_expr: arithmetic_expr '-' . term
+
+    IDENTIFIER    shift, and go to state 46
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    term           go to state 87
+    factor         go to state 34
+    function_call  go to state 35
+
+
+State 64
+
+   52 term: term '*' . factor
+
+    IDENTIFIER    shift, and go to state 46
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    factor         go to state 88
+    function_call  go to state 35
+
+
+State 65
+
+   53 term: term '/' . factor
+
+    IDENTIFIER    shift, and go to state 46
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    factor         go to state 89
+    function_call  go to state 35
+
+
+State 66
+
+   12 function_def: type IDENTIFIER . '(' param_list ')' '{' statement_list '}'
+   18 declaration_no_semi: type IDENTIFIER .
+   19                    | type IDENTIFIER . '=' expression
+
+    '('  shift, and go to state 90
+    '='  shift, and go to state 91
+
+    $default  reduce using rule 18 (declaration_no_semi)
+
+
+State 67
+
+   21 if_stmt: IF '(' expression . ')' '{' statement_list '}'
+   22        | IF '(' expression . ')' '{' statement_list '}' ELSE '{' statement_list '}'
+
+    ')'  shift, and go to state 92
+
+
+State 68
+
+   28 for_init: declaration_no_semi .
+
+    $default  reduce using rule 28 (for_init)
+
+
+State 69
+
+   23 for_stmt: FOR '(' for_init . ';' expression ';' expression ')' '{' statement_list '}'
+   24         | FOR '(' for_init . ';' ';' expression ')' '{' statement_list '}'
+   25         | FOR '(' for_init . ';' expression ';' ')' '{' statement_list '}'
+   26         | FOR '(' for_init . ';' ';' ')' '{' statement_list '}'
+
+    ';'  shift, and go to state 93
+
+
+State 70
+
+   29 for_init: expression .
+
+    $default  reduce using rule 29 (for_init)
+
+
+State 71
+
+   18 declaration_no_semi: type . IDENTIFIER
+   19                    | type . IDENTIFIER '=' expression
+
+    IDENTIFIER  shift, and go to state 94
+
+
+State 72
+
+   30 while_stmt: WHILE '(' expression . ')' '{' statement_list '}'
+
+    ')'  shift, and go to state 95
+
+
+State 73
+
+   32 return_stmt: RETURN expression ';' .
+
+    $default  reduce using rule 32 (return_stmt)
+
+
+State 74
+
+   63 arg_list: expression .
+
+    $default  reduce using rule 63 (arg_list)
+
+
+State 75
+
+   61 function_call: IDENTIFIER '(' arg_list . ')'
+   64 arg_list: arg_list . ',' expression
+
+    ')'  shift, and go to state 96
+    ','  shift, and go to state 97
+
+
+State 76
+
+   35 assignment_expr: IDENTIFIER '=' expression .
+
+    $default  reduce using rule 35 (assignment_expr)
+
+
+State 77
+
+   57 factor: '(' expression ')' .
+
+    $default  reduce using rule 57 (factor)
+
+
+State 78
+
+   37 logical_or_expr: logical_or_expr OR logical_and_expr .
+   39 logical_and_expr: logical_and_expr . AND equality_expr
+
+    AND  shift, and go to state 55
+
+    $default  reduce using rule 37 (logical_or_expr)
+
+
+State 79
+
+   39 logical_and_expr: logical_and_expr AND equality_expr .
+   41 equality_expr: equality_expr . EQ relational_expr
+   42              | equality_expr . NE relational_expr
+
+    EQ  shift, and go to state 56
+    NE  shift, and go to state 57
+
+    $default  reduce using rule 39 (logical_and_expr)
+
+
+State 80
+
+   41 equality_expr: equality_expr EQ relational_expr .
+   44 relational_expr: relational_expr . '<' arithmetic_expr
+   45                | relational_expr . '>' arithmetic_expr
+   46                | relational_expr . LE arithmetic_expr
+   47                | relational_expr . GE arithmetic_expr
+
+    LE   shift, and go to state 58
+    GE   shift, and go to state 59
+    '<'  shift, and go to state 60
+    '>'  shift, and go to state 61
+
+    $default  reduce using rule 41 (equality_expr)
+
+
+State 81
+
+   42 equality_expr: equality_expr NE relational_expr .
+   44 relational_expr: relational_expr . '<' arithmetic_expr
+   45                | relational_expr . '>' arithmetic_expr
+   46                | relational_expr . LE arithmetic_expr
+   47                | relational_expr . GE arithmetic_expr
+
+    LE   shift, and go to state 58
+    GE   shift, and go to state 59
+    '<'  shift, and go to state 60
+    '>'  shift, and go to state 61
+
+    $default  reduce using rule 42 (equality_expr)
+
+
+State 82
+
+   46 relational_expr: relational_expr LE arithmetic_expr .
+   49 arithmetic_expr: arithmetic_expr . '+' term
+   50                | arithmetic_expr . '-' term
+
+    '+'  shift, and go to state 62
+    '-'  shift, and go to state 63
+
+    $default  reduce using rule 46 (relational_expr)
+
+
+State 83
+
+   47 relational_expr: relational_expr GE arithmetic_expr .
+   49 arithmetic_expr: arithmetic_expr . '+' term
+   50                | arithmetic_expr . '-' term
+
+    '+'  shift, and go to state 62
+    '-'  shift, and go to state 63
+
+    $default  reduce using rule 47 (relational_expr)
+
+
+State 84
+
+   44 relational_expr: relational_expr '<' arithmetic_expr .
+   49 arithmetic_expr: arithmetic_expr . '+' term
+   50                | arithmetic_expr . '-' term
+
+    '+'  shift, and go to state 62
+    '-'  shift, and go to state 63
+
+    $default  reduce using rule 44 (relational_expr)
+
+
+State 85
+
+   45 relational_expr: relational_expr '>' arithmetic_expr .
+   49 arithmetic_expr: arithmetic_expr . '+' term
+   50                | arithmetic_expr . '-' term
+
+    '+'  shift, and go to state 62
+    '-'  shift, and go to state 63
+
+    $default  reduce using rule 45 (relational_expr)
+
+
+State 86
+
+   49 arithmetic_expr: arithmetic_expr '+' term .
+   52 term: term . '*' factor
+   53     | term . '/' factor
+
+    '*'  shift, and go to state 64
+    '/'  shift, and go to state 65
+
+    $default  reduce using rule 49 (arithmetic_expr)
+
+
+State 87
+
+   50 arithmetic_expr: arithmetic_expr '-' term .
+   52 term: term . '*' factor
+   53     | term . '/' factor
+
+    '*'  shift, and go to state 64
+    '/'  shift, and go to state 65
+
+    $default  reduce using rule 50 (arithmetic_expr)
+
+
+State 88
+
+   52 term: term '*' factor .
+
+    $default  reduce using rule 52 (term)
+
+
+State 89
+
+   53 term: term '/' factor .
+
+    $default  reduce using rule 53 (term)
+
+
+State 90
+
+   12 function_def: type IDENTIFIER '(' . param_list ')' '{' statement_list '}'
+
+    INT    shift, and go to state 1
+    FLOAT  shift, and go to state 2
+    CHAR   shift, and go to state 3
+    VOID   shift, and go to state 4
+
+    $default  reduce using rule 13 (param_list)
+
+    param_list  go to state 98
+    param       go to state 99
+    type        go to state 100
+
+
+State 91
+
+   19 declaration_no_semi: type IDENTIFIER '=' . expression
+
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    expression        go to state 101
+    assignment_expr   go to state 42
+    logical_or_expr   go to state 28
+    logical_and_expr  go to state 29
+    equality_expr     go to state 30
+    relational_expr   go to state 31
+    arithmetic_expr   go to state 32
+    term              go to state 33
+    factor            go to state 34
+    function_call     go to state 35
+
+
+State 92
+
+   21 if_stmt: IF '(' expression ')' . '{' statement_list '}'
+   22        | IF '(' expression ')' . '{' statement_list '}' ELSE '{' statement_list '}'
+
+    '{'  shift, and go to state 102
+
+
+State 93
+
+   23 for_stmt: FOR '(' for_init ';' . expression ';' expression ')' '{' statement_list '}'
+   24         | FOR '(' for_init ';' . ';' expression ')' '{' statement_list '}'
+   25         | FOR '(' for_init ';' . expression ';' ')' '{' statement_list '}'
+   26         | FOR '(' for_init ';' . ';' ')' '{' statement_list '}'
+
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    ';'           shift, and go to state 103
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    expression        go to state 104
+    assignment_expr   go to state 42
+    logical_or_expr   go to state 28
+    logical_and_expr  go to state 29
+    equality_expr     go to state 30
+    relational_expr   go to state 31
+    arithmetic_expr   go to state 32
+    term              go to state 33
+    factor            go to state 34
+    function_call     go to state 35
+
+
+State 94
+
+   18 declaration_no_semi: type IDENTIFIER .
+   19                    | type IDENTIFIER . '=' expression
+
+    '='  shift, and go to state 91
+
+    $default  reduce using rule 18 (declaration_no_semi)
+
+
+State 95
+
+   30 while_stmt: WHILE '(' expression ')' . '{' statement_list '}'
+
+    '{'  shift, and go to state 105
+
+
+State 96
+
+   61 function_call: IDENTIFIER '(' arg_list ')' .
+
+    $default  reduce using rule 61 (function_call)
+
+
+State 97
+
+   64 arg_list: arg_list ',' . expression
+
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    expression        go to state 106
+    assignment_expr   go to state 42
+    logical_or_expr   go to state 28
+    logical_and_expr  go to state 29
+    equality_expr     go to state 30
+    relational_expr   go to state 31
+    arithmetic_expr   go to state 32
+    term              go to state 33
+    factor            go to state 34
+    function_call     go to state 35
+
+
+State 98
+
+   12 function_def: type IDENTIFIER '(' param_list . ')' '{' statement_list '}'
+   15 param_list: param_list . ',' param
+
+    ')'  shift, and go to state 107
+    ','  shift, and go to state 108
+
+
+State 99
+
+   14 param_list: param .
+
+    $default  reduce using rule 14 (param_list)
+
+
+State 100
+
+   16 param: type . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 109
+
+
+State 101
+
+   19 declaration_no_semi: type IDENTIFIER '=' expression .
+
+    $default  reduce using rule 19 (declaration_no_semi)
+
+
+State 102
+
+   21 if_stmt: IF '(' expression ')' '{' . statement_list '}'
+   22        | IF '(' expression ')' '{' . statement_list '}' ELSE '{' statement_list '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement_list       go to state 110
+    statement            go to state 17
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 103
+
+   24 for_stmt: FOR '(' for_init ';' ';' . expression ')' '{' statement_list '}'
+   26         | FOR '(' for_init ';' ';' . ')' '{' statement_list '}'
+
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    ')'           shift, and go to state 111
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    expression        go to state 112
+    assignment_expr   go to state 42
+    logical_or_expr   go to state 28
+    logical_and_expr  go to state 29
+    equality_expr     go to state 30
+    relational_expr   go to state 31
+    arithmetic_expr   go to state 32
+    term              go to state 33
+    factor            go to state 34
+    function_call     go to state 35
+
+
+State 104
+
+   23 for_stmt: FOR '(' for_init ';' expression . ';' expression ')' '{' statement_list '}'
+   25         | FOR '(' for_init ';' expression . ';' ')' '{' statement_list '}'
+
+    ';'  shift, and go to state 113
+
+
+State 105
+
+   30 while_stmt: WHILE '(' expression ')' '{' . statement_list '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement_list       go to state 114
+    statement            go to state 17
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 106
+
+   64 arg_list: arg_list ',' expression .
+
+    $default  reduce using rule 64 (arg_list)
+
+
+State 107
+
+   12 function_def: type IDENTIFIER '(' param_list ')' . '{' statement_list '}'
+
+    '{'  shift, and go to state 115
+
+
+State 108
+
+   15 param_list: param_list ',' . param
+
+    INT    shift, and go to state 1
+    FLOAT  shift, and go to state 2
+    CHAR   shift, and go to state 3
+    VOID   shift, and go to state 4
+
+    param  go to state 116
+    type   go to state 100
+
+
+State 109
+
+   16 param: type IDENTIFIER .
+
+    $default  reduce using rule 16 (param)
+
+
+State 110
+
+    3 statement_list: statement_list . statement
+   21 if_stmt: IF '(' expression ')' '{' statement_list . '}'
+   22        | IF '(' expression ')' '{' statement_list . '}' ELSE '{' statement_list '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '}'           shift, and go to state 117
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement            go to state 50
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 111
+
+   26 for_stmt: FOR '(' for_init ';' ';' ')' . '{' statement_list '}'
+
+    '{'  shift, and go to state 118
+
+
+State 112
+
+   24 for_stmt: FOR '(' for_init ';' ';' expression . ')' '{' statement_list '}'
+
+    ')'  shift, and go to state 119
+
+
+State 113
+
+   23 for_stmt: FOR '(' for_init ';' expression ';' . expression ')' '{' statement_list '}'
+   25         | FOR '(' for_init ';' expression ';' . ')' '{' statement_list '}'
+
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    ')'           shift, and go to state 120
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    expression        go to state 121
+    assignment_expr   go to state 42
+    logical_or_expr   go to state 28
+    logical_and_expr  go to state 29
+    equality_expr     go to state 30
+    relational_expr   go to state 31
+    arithmetic_expr   go to state 32
+    term              go to state 33
+    factor            go to state 34
+    function_call     go to state 35
+
+
+State 114
+
+    3 statement_list: statement_list . statement
+   30 while_stmt: WHILE '(' expression ')' '{' statement_list . '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '}'           shift, and go to state 122
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement            go to state 50
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 115
+
+   12 function_def: type IDENTIFIER '(' param_list ')' '{' . statement_list '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement_list       go to state 123
+    statement            go to state 17
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 116
+
+   15 param_list: param_list ',' param .
+
+    $default  reduce using rule 15 (param_list)
+
+
+State 117
+
+   21 if_stmt: IF '(' expression ')' '{' statement_list '}' .
+   22        | IF '(' expression ')' '{' statement_list '}' . ELSE '{' statement_list '}'
+
+    ELSE  shift, and go to state 124
+
+    $default  reduce using rule 21 (if_stmt)
+
+
+State 118
+
+   26 for_stmt: FOR '(' for_init ';' ';' ')' '{' . statement_list '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement_list       go to state 125
+    statement            go to state 17
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 119
+
+   24 for_stmt: FOR '(' for_init ';' ';' expression ')' . '{' statement_list '}'
+
+    '{'  shift, and go to state 126
+
+
+State 120
+
+   25 for_stmt: FOR '(' for_init ';' expression ';' ')' . '{' statement_list '}'
+
+    '{'  shift, and go to state 127
+
+
+State 121
+
+   23 for_stmt: FOR '(' for_init ';' expression ';' expression . ')' '{' statement_list '}'
+
+    ')'  shift, and go to state 128
+
+
+State 122
+
+   30 while_stmt: WHILE '(' expression ')' '{' statement_list '}' .
+
+    $default  reduce using rule 30 (while_stmt)
+
+
+State 123
+
+    3 statement_list: statement_list . statement
+   12 function_def: type IDENTIFIER '(' param_list ')' '{' statement_list . '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '}'           shift, and go to state 129
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement            go to state 50
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 124
+
+   22 if_stmt: IF '(' expression ')' '{' statement_list '}' ELSE . '{' statement_list '}'
+
+    '{'  shift, and go to state 130
+
+
+State 125
+
+    3 statement_list: statement_list . statement
+   26 for_stmt: FOR '(' for_init ';' ';' ')' '{' statement_list . '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '}'           shift, and go to state 131
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement            go to state 50
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 126
+
+   24 for_stmt: FOR '(' for_init ';' ';' expression ')' '{' . statement_list '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement_list       go to state 132
+    statement            go to state 17
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 127
+
+   25 for_stmt: FOR '(' for_init ';' expression ';' ')' '{' . statement_list '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement_list       go to state 133
+    statement            go to state 17
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 128
+
+   23 for_stmt: FOR '(' for_init ';' expression ';' expression ')' . '{' statement_list '}'
+
+    '{'  shift, and go to state 134
+
+
+State 129
+
+   12 function_def: type IDENTIFIER '(' param_list ')' '{' statement_list '}' .
+
+    $default  reduce using rule 12 (function_def)
+
+
+State 130
+
+   22 if_stmt: IF '(' expression ')' '{' statement_list '}' ELSE '{' . statement_list '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement_list       go to state 135
+    statement            go to state 17
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 131
+
+   26 for_stmt: FOR '(' for_init ';' ';' ')' '{' statement_list '}' .
+
+    $default  reduce using rule 26 (for_stmt)
+
+
+State 132
+
+    3 statement_list: statement_list . statement
+   24 for_stmt: FOR '(' for_init ';' ';' expression ')' '{' statement_list . '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '}'           shift, and go to state 136
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement            go to state 50
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 133
+
+    3 statement_list: statement_list . statement
+   25 for_stmt: FOR '(' for_init ';' expression ';' ')' '{' statement_list . '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '}'           shift, and go to state 137
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement            go to state 50
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 134
+
+   23 for_stmt: FOR '(' for_init ';' expression ';' expression ')' '{' . statement_list '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement_list       go to state 138
+    statement            go to state 17
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 135
+
+    3 statement_list: statement_list . statement
+   22 if_stmt: IF '(' expression ')' '{' statement_list '}' ELSE '{' statement_list . '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '}'           shift, and go to state 139
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement            go to state 50
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 136
+
+   24 for_stmt: FOR '(' for_init ';' ';' expression ')' '{' statement_list '}' .
+
+    $default  reduce using rule 24 (for_stmt)
+
+
+State 137
+
+   25 for_stmt: FOR '(' for_init ';' expression ';' ')' '{' statement_list '}' .
+
+    $default  reduce using rule 25 (for_stmt)
+
+
+State 138
+
+    3 statement_list: statement_list . statement
+   23 for_stmt: FOR '(' for_init ';' expression ';' expression ')' '{' statement_list . '}'
+
+    INT           shift, and go to state 1
+    FLOAT         shift, and go to state 2
+    CHAR          shift, and go to state 3
+    VOID          shift, and go to state 4
+    IF            shift, and go to state 5
+    FOR           shift, and go to state 6
+    WHILE         shift, and go to state 7
+    RETURN        shift, and go to state 8
+    IDENTIFIER    shift, and go to state 9
+    NUMBER        shift, and go to state 10
+    CHAR_LITERAL  shift, and go to state 11
+    '('           shift, and go to state 12
+    '}'           shift, and go to state 140
+    '-'           shift, and go to state 13
+    '!'           shift, and go to state 14
+
+    statement            go to state 50
+    function_def         go to state 18
+    declaration          go to state 19
+    declaration_no_semi  go to state 20
+    assignment           go to state 21
+    if_stmt              go to state 22
+    for_stmt             go to state 23
+    while_stmt           go to state 24
+    return_stmt          go to state 25
+    expression           go to state 26
+    assignment_expr      go to state 27
+    logical_or_expr      go to state 28
+    logical_and_expr     go to state 29
+    equality_expr        go to state 30
+    relational_expr      go to state 31
+    arithmetic_expr      go to state 32
+    term                 go to state 33
+    factor               go to state 34
+    function_call        go to state 35
+    type                 go to state 36
+
+
+State 139
+
+   22 if_stmt: IF '(' expression ')' '{' statement_list '}' ELSE '{' statement_list '}' .
+
+    $default  reduce using rule 22 (if_stmt)
+
+
+State 140
+
+   23 for_stmt: FOR '(' for_init ';' expression ';' expression ')' '{' statement_list '}' .
+
+    $default  reduce using rule 23 (for_stmt)
