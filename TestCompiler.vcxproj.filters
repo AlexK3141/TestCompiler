@@ -50,6 +50,12 @@
     <ClInclude Include="stack.hh">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ast_nodes.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="color_utils.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="lexer.l">

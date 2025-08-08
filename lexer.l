@@ -67,7 +67,6 @@ ws          [ \t]+
     return token::token_kind_type::CHAR_LITERAL;
 }
 
-
 "&&"        { return token::token_kind_type::AND; }
 "||"        { return token::token_kind_type::OR; }
 "=="        { return token::token_kind_type::EQ; }
@@ -75,19 +74,21 @@ ws          [ \t]+
 "<="        { return token::token_kind_type::LE; }
 ">="        { return token::token_kind_type::GE; }
 
+"="         { return '='; }
 ";"         { return ';'; }
 ","         { return ','; }
 "("         { return '('; }
 ")"         { return ')'; }
 "{"         { return '{'; }
 "}"         { return '}'; }
-"="         { return '='; }
+
 "<"         { return '<'; }
 ">"         { return '>'; }
 "+"         { return '+'; }
 "-"         { return '-'; }
 "*"         { return '*'; }
 "/"         { return '/'; }
+"!"         { return '!'; }
 
 .           { 
     // Handle unrecognized characters

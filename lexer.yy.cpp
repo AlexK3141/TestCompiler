@@ -413,8 +413,8 @@ int yyFlexLexer::yylex()
 /* %% [3.0] code to copy yytext_ptr to yytext[] goes here, if %array \ */\
 	(yy_c_buf_p) = yy_cp;
 /* %% [4.0] data tables for the DFA and the user's section 1 definitions go here */
-#define YY_NUM_RULES 35
-#define YY_END_OF_BUFFER 36
+#define YY_NUM_RULES 36
+#define YY_END_OF_BUFFER 37
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -424,10 +424,10 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[74] =
     {   0,
-        0,    0,   36,   34,    1,    2,   34,   34,   34,   23,
-       24,   32,   30,   22,   31,   33,   13,   21,   28,   27,
-       29,   12,   12,   12,   12,   12,   12,   12,   12,   25,
-       34,   26,    1,   18,   15,    0,    0,   13,   19,   17,
+        0,    0,   37,   35,    1,    2,   34,   35,   35,   24,
+       25,   32,   30,   23,   31,   33,   13,   22,   28,   21,
+       29,   12,   12,   12,   12,   12,   12,   12,   12,   26,
+       35,   27,    1,   18,   15,    0,    0,   13,   19,   17,
        20,   12,   12,   12,   12,   12,    3,   12,   12,   12,
        12,   16,   14,   13,   12,   12,   12,    5,    8,   12,
        12,   12,   10,    4,   12,   12,   11,   12,    9,   12,
@@ -535,17 +535,17 @@ static const flex_int16_t yy_chk[126] =
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static const flex_int32_t yy_rule_can_match_eol[36] =
+static const flex_int32_t yy_rule_can_match_eol[37] =
     {   0,
 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
 
-static const flex_int16_t yy_rule_linenum[35] =
+static const flex_int16_t yy_rule_linenum[36] =
     {   0,
        42,   43,   45,   46,   47,   48,   49,   50,   51,   52,
-       53,   55,   60,   66,   72,   73,   74,   75,   76,   77,
-       79,   80,   81,   82,   83,   84,   85,   86,   87,   88,
-       89,   90,   91,   93
+       53,   55,   60,   66,   71,   72,   73,   74,   75,   76,
+       78,   79,   80,   81,   82,   83,   84,   86,   87,   88,
+       89,   90,   91,   92,   94
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -843,12 +843,12 @@ do_action:	/* This label is used only to access EOF actions. */
 			{
 			if ( yy_act == 0 )
 				std::cerr << "--scanner backing up\n";
-			else if ( yy_act < 35 )
+			else if ( yy_act < 36 )
 				std::cerr << "--accepting rule at line " << yy_rule_linenum[yy_act] <<
 				         "(\"" << yytext << "\")\n";
-			else if ( yy_act == 35 )
-				std::cerr << "--accepting default rule (\"" << yytext << "\")\n";
 			else if ( yy_act == 36 )
+				std::cerr << "--accepting default rule (\"" << yytext << "\")\n";
+			else if ( yy_act == 37 )
 				std::cerr << "--(end of buffer or a NUL)\n";
 			else
 				std::cerr << "--EOF (start condition " << YY_START << ")\n";
@@ -947,68 +947,68 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 72 "lexer.l"
+#line 71 "lexer.l"
 { return token::token_kind_type::AND; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 73 "lexer.l"
+#line 72 "lexer.l"
 { return token::token_kind_type::OR; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 74 "lexer.l"
+#line 73 "lexer.l"
 { return token::token_kind_type::EQ; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 75 "lexer.l"
+#line 74 "lexer.l"
 { return token::token_kind_type::NE; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 76 "lexer.l"
+#line 75 "lexer.l"
 { return token::token_kind_type::LE; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 77 "lexer.l"
+#line 76 "lexer.l"
 { return token::token_kind_type::GE; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
+#line 78 "lexer.l"
+{ return '='; }
+	YY_BREAK
+case 22:
+YY_RULE_SETUP
 #line 79 "lexer.l"
 { return ';'; }
 	YY_BREAK
-case 22:
+case 23:
 YY_RULE_SETUP
 #line 80 "lexer.l"
 { return ','; }
 	YY_BREAK
-case 23:
+case 24:
 YY_RULE_SETUP
 #line 81 "lexer.l"
 { return '('; }
 	YY_BREAK
-case 24:
+case 25:
 YY_RULE_SETUP
 #line 82 "lexer.l"
 { return ')'; }
 	YY_BREAK
-case 25:
+case 26:
 YY_RULE_SETUP
 #line 83 "lexer.l"
 { return '{'; }
 	YY_BREAK
-case 26:
+case 27:
 YY_RULE_SETUP
 #line 84 "lexer.l"
 { return '}'; }
-	YY_BREAK
-case 27:
-YY_RULE_SETUP
-#line 85 "lexer.l"
-{ return '='; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
@@ -1042,19 +1042,24 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 93 "lexer.l"
+#line 92 "lexer.l"
+{ return '!'; }
+	YY_BREAK
+case 35:
+YY_RULE_SETUP
+#line 94 "lexer.l"
 { 
     // Handle unrecognized characters
     std::cerr << "Lexical Error: Unrecognized character '" << yytext 
               << "' on line " << loc->begin.line << std::endl;
 }
 	YY_BREAK
-case 35:
+case 36:
 YY_RULE_SETUP
-#line 99 "lexer.l"
+#line 100 "lexer.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1057 "lexer.yy.cpp"
+#line 1062 "lexer.yy.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2180,7 +2185,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 99 "lexer.l"
+#line 100 "lexer.l"
 
 // User code section (not used in this simple example)
 

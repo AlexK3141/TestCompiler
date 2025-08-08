@@ -8,39 +8,40 @@ Node* ast_root = nullptr;
 
 Driver::~Driver()
 {
+   clean();
    delete(scanner);
    scanner = nullptr;
    delete(parser);
    parser = nullptr;
 }
 
-void Driver::parse( const char * const filename )
+int Driver::parse( const char * const filename )
 {
+    int parse_result = -1;
    assert( filename != nullptr );
    std::ifstream in_file( filename );
    if( ! in_file.good() )
    {
        exit( EXIT_FAILURE );
    }
-   parse_helper( in_file );
-   return;
+   parse_result = parse_helper( in_file );
+   return parse_result;
 }
 
-void Driver::parse( std::istream &stream )
+int Driver::parse( std::istream &stream )
 {
+    int parse_result = -1;
    if( ! stream.good()  && stream.eof() )
    {
-       return;
+       return parse_result;
    }
    //else
-   parse_helper( stream ); 
-   return;
+   parse_result = parse_helper( stream );
+   return parse_result;
 }
 
-
-void Driver::parse_helper( std::istream &stream )
+int Driver::parse_helper( std::istream &stream )
 {
-   
    delete(scanner);
    try
    {
@@ -67,12 +68,9 @@ void Driver::parse_helper( std::istream &stream )
 
    scanner->set_debug(1); // Enable Flex debug output
    parser->set_debug_level(1); // Enable Bison debug output
-   const int accept( 0 );
-   if( parser->parse() != accept )
-   {
-      std::cerr << "Parse failed!!\n";
-   }
-   return;
+
+   int parse_result = parser->parse();
+   return parse_result;
 }
 
 void Driver::print_ast(Node* node, int indent)
@@ -95,14 +93,23 @@ void Driver::print_ast(Node* node, int indent)
 
 std::ostream& Driver::print( std::ostream &stream )
 {
-   //stream << red  << "Results: " << norm << "\n";
-   //stream << blue << "Uppercase: " << norm << uppercase << "\n";
-   //stream << blue << "Lowercase: " << norm << lowercase << "\n";
-   //stream << blue << "Lines: " << norm << lines << "\n";
-   //stream << blue << "Words: " << norm << words << "\n";
-   //stream << blue << "Characters: " << norm << chars << "\n";
+    std::cout << "AST:" << std::endl;
+    if (ast_root) {
+        ast_root->print(std::cout);
+    }
+    else {
+        std::cout << "Empty AST" << std::endl;
+    }
 
-    print_ast(ast_root);
     return(stream);
+}
+
+void Driver::clean()
+{
+    if (ast_root != nullptr)
+    {
+        delete ast_root;
+        ast_root = nullptr;
+    }
 }
 

@@ -24,15 +24,27 @@ main( const int argc, const char **argv )
    }
 
    Driver driver;
+   int parse_result = -1;
    if( std::strncmp( argv[ 1 ], "-o", 2 ) == 0 )
    {
-      driver.parse( std::cin );
+       parse_result = driver.parse( std::cin );
    }
    else
    {
-      driver.parse( argv[1] );
+       parse_result = driver.parse( argv[1] );
    }
-   driver.print( std::cout ) << "\n";
+
+   if (parse_result == Driver::ACCEPT)
+   {
+       driver.print(std::cout) << "\n";
+   }
+   else
+   {
+       std::cerr << "Parse failed!!\n";
+   }
+
+   // Always delete ast_root to prevent leaks on partial parse
+   driver.clean();
 
    return( EXIT_SUCCESS );
 }

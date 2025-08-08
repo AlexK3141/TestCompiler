@@ -135,6 +135,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ast.hpp" />
+    <ClInclude Include="ast_nodes.hpp" />
+    <ClInclude Include="color_utils.hpp" />
     <ClInclude Include="driver.hpp" />
     <ClInclude Include="location.hh" />
     <ClInclude Include="parser.tab.hpp" />

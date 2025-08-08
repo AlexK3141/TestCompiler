@@ -51,11 +51,13 @@
 #include <cstdlib>
 #include <fstream>
 #include <string>
-#include <vector>
-
+#include <memory>
 #include "ast.hpp"
+#include "ast_nodes.hpp"
 
 class Scanner;
+
+using namespace SimpleCompiler;
 
 // The following definitions is missing when %locations isn't used
 # ifndef YY_NULLPTR
@@ -66,7 +68,7 @@ class Scanner;
 #  endif
 # endif
 
-#line 70 "parser.tab.hpp"
+#line 72 "parser.tab.hpp"
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -207,7 +209,7 @@ class Scanner;
 
 #line 7 "parser.y"
 namespace SimpleCompiler {
-#line 211 "parser.tab.hpp"
+#line 213 "parser.tab.hpp"
 
 
 
@@ -921,7 +923,7 @@ switch (yykind)
     };
 
     /// Build a parser object.
-    Parser (Scanner &scanner_yyarg, Node*& ast_root_yyarg);
+    Parser (Scanner &scanner_yyarg, Node* & ast_root_yyarg);
     virtual ~Parser ();
 
 #if 201103L <= YY_CPLUSPLUS
@@ -1634,14 +1636,14 @@ switch (yykind)
 
     // User arguments.
     Scanner &scanner;
-    Node*& ast_root;
+    Node* & ast_root;
 
   };
 
 
 #line 7 "parser.y"
 } // SimpleCompiler
-#line 1645 "parser.tab.hpp"
+#line 1647 "parser.tab.hpp"
 
 
 
